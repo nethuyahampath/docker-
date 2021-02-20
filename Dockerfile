@@ -1,10 +1,13 @@
-FROM python:3.8-slim-buster
+FROM python:3.7.9-alpine3.13
 
-WORKDIR /app
+WORKDIR /usr/src/app 
 
-COPY requirements.txt requirements.txt
-RUN pip3 install -r requirements.txt
+RUN pip3 install flask
+RUN pip3 install flask_cors
+RUN pip3 install datadog
 
-COPY . .
+COPY app.py /usr/src/app
+COPY . /usr/src/app
 
-CMD [ "python", "-m" , "flask", "run", "--host=0.0.0.0"]
+EXPOSE 8083
+CMD ["python3", "./app.py"]
